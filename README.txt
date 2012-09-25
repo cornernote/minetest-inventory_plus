@@ -4,6 +4,7 @@ Inventory Plus for Minetest
 
 Copyright (c) 2012 cornernote, Brett O'Donnell <cornernote@gmail.com>
 Source Code: https://github.com/cornernote/minetest-inventory_plus
+Home Page: https://sites.google.com/site/cornernote/minetest/inventory-plus
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
 

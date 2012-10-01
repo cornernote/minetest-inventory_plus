@@ -51,6 +51,17 @@ inventory_plus.get_formspec = function(player,page)
 			.."list[current_player;craftpreview;7,1;1,1;]"
 	end
 	
+	-- creative page
+	if page=="creative" then
+		formspec = player:get_inventory_formspec()
+			.."button[5,0;2,0.5;main;Back]"
+			.."label[6,1.5;Trash:]"
+			.."list[detached:trash;main;6,2;1,1;]"
+			.."label[5,1.5;Refill:]"
+			.."list[detached:refill;main;5,2;1,1;]"
+	end
+	
+	-- main page
 	if page=="main" then
 		-- buttons
 		local x,y=0,0
@@ -66,6 +77,37 @@ inventory_plus.get_formspec = function(player,page)
 	
 	return formspec
 end
+
+-- trash slot
+inventory_plus.trash = minetest.create_detached_inventory("trash", {
+	allow_put = function(inv, listname, index, stack, player)
+		if minetest.setting_getbool("creative_mode") then
+			return stack:get_count()
+		else
+			return 0
+		end
+	end,
+	on_put = function(inv, listname, index, stack, player)
+		inv:set_stack(listname, index, nil)
+	end,
+})
+inventory_plus.trash:set_size("main", 1)
+
+-- refill slot
+inventory_plus.refill = minetest.create_detached_inventory("refill", {
+	allow_put = function(inv, listname, index, stack, player)
+		if minetest.setting_getbool("creative_mode") then
+			return stack:get_count()
+		else
+			return 0
+		end
+	end,
+	on_put = function(inv, listname, index, stack, player)
+		inv:set_stack(listname, index, ItemStack(stack:get_name().." "..stack:get_stack_max()))
+	end,
+})
+inventory_plus.refill:set_size("main", 1)
+
 
 -- register_on_joinplayer
 minetest.register_on_joinplayer(function(player)
@@ -92,10 +134,8 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	end
 	-- creative
 	if fields.creative_prev or fields.creative_next then
-		minetest.after(0.01,function()
-			inventory_plus.set_inventory_formspec(player, player:get_inventory_formspec().."button[5,0;2,0.5;main;Back]")
-			return
-		end)
+		inventory_plus.set_inventory_formspec(player, inventory_plus.get_formspec(player,"creative"))
+		return
 	end
 end)
 

@@ -116,7 +116,8 @@ minetest.register_on_joinplayer(function(player)
 		inventory_plus.register_button(player,"creative_prev","Creative")
 	end
 	minetest.after(1,function()
-		inventory_plus.set_inventory_formspec(player,inventory_plus.get_formspec(player,"main"))
+		local default = minetest.setting_get("inventory_default") or "craft"
+		inventory_plus.set_inventory_formspec(player,inventory_plus.get_formspec(player,default))
 	end)
 end)
 

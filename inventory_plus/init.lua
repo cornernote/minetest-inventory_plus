@@ -47,8 +47,12 @@ inventory_plus.get_formspec = function(player,page)
 	if page=="craft" then
 		formspec = formspec
 			.."button[0,0;2,0.5;main;Back]"
-			.."list[current_player;craft;3,0;3,3;]"
 			.."list[current_player;craftpreview;7,1;1,1;]"
+		if minetest.setting_getbool("inventory_craft_small") then
+			formspec = formspec.."list[current_player;craft;3,0;2,2;]"
+		else
+			formspec = formspec.."list[current_player;craft;3,0;3,3;]"
+		end
 	end
 	
 	-- creative page
@@ -111,6 +115,13 @@ inventory_plus.refill:set_size("main", 1)
 
 -- register_on_joinplayer
 minetest.register_on_joinplayer(function(player)
+	if minetest.setting_getbool("inventory_craft_small") then
+		player:get_inventory():set_width("craft", 2)
+		player:get_inventory():set_size("craft", 2*2)
+	else
+		player:get_inventory():set_width("craft", 3)
+		player:get_inventory():set_size("craft", 3*3)
+	end
 	inventory_plus.register_button(player,"craft","Craft")
 	if minetest.setting_getbool("creative_mode") then
 		inventory_plus.register_button(player,"creative_prev","Creative")

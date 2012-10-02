@@ -53,7 +53,7 @@ inventory_plus.get_formspec = function(player,page)
 	
 	-- creative page
 	if page=="creative" then
-		formspec = player:get_inventory_formspec()
+		return player:get_inventory_formspec()
 			.."button[5,0;2,0.5;main;Back]"
 			.."label[6,1.5;Trash:]"
 			.."list[detached:trash;main;6,2;1,1;]"
@@ -134,7 +134,9 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	end
 	-- creative
 	if fields.creative_prev or fields.creative_next then
-		inventory_plus.set_inventory_formspec(player, inventory_plus.get_formspec(player,"creative"))
+		minetest.after(0.01,function()
+			inventory_plus.set_inventory_formspec(player, inventory_plus.get_formspec(player,"creative"))
+		end)
 		return
 	end
 end)

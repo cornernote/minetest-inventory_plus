@@ -15,6 +15,9 @@ inventory_plus = {}
 -- define buttons
 inventory_plus.buttons = {}
 
+-- default inventory page
+inventory_plus.default = minetest.setting_get("inventory_default") or "craft"
+
 -- register_button
 inventory_plus.register_button = function(player,name,label)
 	local player_name = player:get_player_name()
@@ -50,8 +53,12 @@ inventory_plus.get_formspec = function(player,page)
 			.."list[current_player;craftpreview;7,1;1,1;]"
 		if minetest.setting_getbool("inventory_craft_small") then
 			formspec = formspec.."list[current_player;craft;3,0;2,2;]"
+			player:get_inventory():set_width("craft", 2)
+			player:get_inventory():set_size("craft", 2*2)
 		else
 			formspec = formspec.."list[current_player;craft;3,0;3,3;]"
+			player:get_inventory():set_width("craft", 3)
+			player:get_inventory():set_size("craft", 3*3)
 		end
 	end
 	
@@ -112,7 +119,6 @@ inventory_plus.refill = minetest.create_detached_inventory("refill", {
 })
 inventory_plus.refill:set_size("main", 1)
 
-
 -- register_on_joinplayer
 minetest.register_on_joinplayer(function(player)
 	if minetest.setting_getbool("inventory_craft_small") then
@@ -127,8 +133,7 @@ minetest.register_on_joinplayer(function(player)
 		inventory_plus.register_button(player,"creative_prev","Creative")
 	end
 	minetest.after(1,function()
-		local default = minetest.setting_get("inventory_default") or "craft"
-		inventory_plus.set_inventory_formspec(player,inventory_plus.get_formspec(player,default))
+		inventory_plus.set_inventory_formspec(player,inventory_plus.get_formspec(player, inventory_plus.default))
 	end)
 end)
 

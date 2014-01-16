@@ -116,6 +116,53 @@
                 <a href="https://github.com/cornernote/minetest-inventory_plus/archive/master.zip">latest version</a>, and move the the
                 <code>minetest-inventory_plus-master</code> folder into your
                 <code>minetest/mods</code> folder.</p>
+                
+            <h3>Modding Guide</h3>
+            
+            <p>FOr some examples, check out the following mods that use this:</p>
+            <ul>
+                <li>
+                    <a href="http://cornernote.github.io/minetest-home_gui/">Home GUI</a>
+                </li>
+                <li>
+                    <a href="http://cornernote.github.io/minetest-bags/">Bags</a>
+                </li>
+                <li>
+                    <a href="http://cornernote.github.io/minetest-armor/">Armor</a>
+                </li>
+            </ul>
+
+            <pre class="prettyprint linenums lang-lua">-- add inventory_plus page when a player joins
+minetest.register_on_joinplayer(function(player)
+    inventory_plus.register_button(player,"your_mod_name","Your Mod Label")
+end)
+
+-- each time a player clicks an inventory button, this is called
+minetest.register_on_player_receive_fields(function(player, formname, fields)
+
+    -- your_mod_name was clicked from the main inventory page
+    if fields.your_mod_name then
+        -- setup the inventory formspec
+        inventory_plus.set_inventory_formspec(player, get_formspec(player))
+    end
+
+    -- some button was clicked
+    if fields.your_mod_name_some_button then
+        -- setup the inventory formspec
+        inventory_plus.set_inventory_formspec(player, get_formspec(player))
+
+        -- user clicked the button, better do something here
+
+    end
+end)
+
+-- get_formspec to use when your button is clicked
+local get_formspec = function(player)
+    local formspec = "size[4,1.5]" -- size of the formspec page
+        .."button[0,0;2,0.5;main;Back]" -- back to main inventory
+        .."button[0,2;2,0.5;your_mod_name_some_button;Some Button]" -- a button that does something in your gui
+    return formspec
+end</pre>
 
         </div>
     </div>

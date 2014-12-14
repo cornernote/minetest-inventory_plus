@@ -14,7 +14,7 @@ Allows additional formspec buttons to be added to the player inventory.
 
 - **[Documentation](http://cornernote.github.io/minetest-inventory_plus)**
 - **[GitHub Project](https://github.com/cornernote/minetest-inventory_plus)**
-- **[Minetest Forum](http://minetest.net/forum/viewtopic.php?id=3100)**
+- **[Minetest Forum](https://forum.minetest.net/viewtopic.php?id=3100)**
 
 
 ## Support

@@ -121,7 +121,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	end
 	-- creative
 	if fields.creative_prev or fields.creative_next then
-		minetest.after(0.01,function()
+		minetest.after(0.1,function()
 			inventory_plus.set_inventory_formspec(player, inventory_plus.get_formspec(player,"creative"))
 		end)
 		return

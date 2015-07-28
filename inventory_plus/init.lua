@@ -41,6 +41,10 @@ end
 
 -- get_formspec
 inventory_plus.get_formspec = function(player,page)
+	if not player then
+		return
+	end
+	
 	local formspec = "size[8,7.5]"
 	
 	-- player inventory

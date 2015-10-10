@@ -57,10 +57,14 @@ inventory_plus.get_formspec = function(player,page)
 			.."list[current_player;craftpreview;7,1;1,1;]"
 		if minetest.setting_getbool("inventory_craft_small") then
 			formspec = formspec.."list[current_player;craft;3,0;2,2;]"
+			.."listring[current_name;craft]"
+			.."listring[current_player;main]"
 			--player:get_inventory():set_width("craft", 2)
 			--player:get_inventory():set_size("craft", 2*2)
 		else
 			formspec = formspec.."list[current_player;craft;3,0;3,3;]"
+			.."listring[current_name;craft]"
+			.."listring[current_player;main]"
 			--player:get_inventory():set_width("craft", 3)
 			--player:get_inventory():set_size("craft", 3*3)
 		end
